@@ -9,42 +9,52 @@ sudo zypper refresh && sudo zypper update -y
 
 print_message "Adicionando repositórios..."
 sudo zypper ar https://repo.vivaldi.com/archive/vivaldi-suse.repo
-sudo zypper ar https://download.videolan.org/SuSE/Tumbleweed VLC
 sudo zypper ar https://packages.microsoft.com/yumrepos/vscode Microsoft-VSCode
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+sudo zypper ref
 
 print_message "Instalando pacotes via zypper..."
-sudo zypper install -y vivaldi Telegram alacritty zed code vlc starship arc-theme
+sudo zypper install -y vivaldi-stable telegram-desktop git flatpak alacritty zed code steam starship libreoffice \
+                        gstreamer-plugins-bad gstreamer-plugins-ugly ffmpeg
+
+print_message "Instalando VLC."
+sudo zypper ar https://download.videolan.org/SuSE/Tumbleweed VLC
+sudo zypper mr -r VLC
+sudo zypper in vlc
 
 print_message "Instalando Flatpaks..."
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak install -y flathub com.discordapp.Discord
-flatpak install -y flathub com.spotify.Client
-flatpak install -y flathub org.qbittorrent.qBittorrent
-flatpak install -y flathub org.bunkus.mkvtoolnix-gui
-flatpak install -y flathub io.mrarm.mcpelauncher
+flatpak install flathub com.discordapp.Discord
+flatpak install flathub com.spotify.Client
+flatpak install flathub org.qbittorrent.qBittorrent
+flatpak install flathub org.bunkus.mkvtoolnix-gui
+flatpak install flathub io.mrarm.mcpelauncher
 
-print_message "Aplicando temas e ícones..."
-mkdir -p ~/.icons ~/.themes
-wget -O Tela-Dark.tar.xz https://github.com/vinceliuice/Tela-icon-theme/releases/download/2021.12.24/Tela-Dark.tar.xz
-tar -xf Tela-Dark.tar.xz -C ~/.icons
-gsettings set org.gnome.desktop.interface gtk-theme "Arc-Dark"
-gsettings set org.gnome.desktop.interface icon-theme "Tela-Dark"
+print_message "Instalando Tela Icon Theme..."
+git clone https://github.com/vinceliuice/Tela-icon-theme
+cd Tela-icon-theme
+chmod +x install.sh
+./install.sh
+cd ..
+rm -rf Tela-icon-theme
 
 print_message "Configurando o Alacritty..."
 mkdir -p ~/.config/alacritty
 cat <<EOF > ~/.config/alacritty/alacritty.toml
-font:
-  normal:
-    family: "FiraCode Nerd Font"
-    style: "Regular"
-  bold:
-    family: "FiraCode Nerd Font"
-    style: "Bold"
-  italic:
-    family: "FiraCode Nerd Font"
-    style: "Light"
-  size: 12
+[font]
+size = 12
+
+[font.bold]
+family = "FiraCode Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "FiraCode Nerd Font"
+style = "Light"
+
+[font.normal]
+family = "FiraCode Nerd Font"
+style = "Regular"
+
 EOF
 
 print_message "Configurando o Starship no .bashrc..."
@@ -55,4 +65,4 @@ else
     print_message "Starship já está configurado no .bashrc."
 fi
 
-print_message "Configuração concluída! Certifique-se de reiniciar ou relogar para aplicar todas as mudanças."
+print_message "Configuração concluída!"
