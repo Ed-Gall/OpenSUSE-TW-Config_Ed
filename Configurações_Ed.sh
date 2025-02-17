@@ -14,7 +14,7 @@ sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 sudo zypper ref
 
 print_message "Instalando pacotes via zypper..."
-sudo zypper install -y vivaldi-stable telegram-desktop git flatpak wine alacritty zed code steam starship libreoffice \
+sudo zypper install -y vivaldi-stable telegram-desktop git flatpak wine gcc gcc-c++ discord alacritty zed code steam starship libreoffice \
                         gstreamer-plugins-bad gstreamer-plugins-ugly ffmpeg
 
 print_message "Instalando VLC."
@@ -23,7 +23,6 @@ sudo zypper mr -r VLC
 sudo zypper in vlc
 
 print_message "Instalando Flatpaks..."
-flatpak install flathub com.discordapp.Discord
 flatpak install flathub com.spotify.Client
 flatpak install flathub it.mijorus.gearlever
 flatpak install flathub org.qbittorrent.qBittorrent
