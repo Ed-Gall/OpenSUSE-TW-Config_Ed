@@ -14,9 +14,9 @@ sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 sudo zypper ref
 
 print_message "Instalando pacotes via zypper..."
-sudo zypper install -y vivaldi-stable telegram-desktop git flatpak wine gcc gcc-c++ discord alacritty zed code steam starship libreoffice
+sudo zypper install -y vivaldi-stable telegram-desktop git flatpak wine gcc gcc-c++ discord alacritty zed code texlive-scheme-basic steam starship libreoffice
 sudo zypper ref
-sudo zypper install gstreamer gstreamer-plugins-base gstreamer-plugins-good ffmpeg texlive-scheme-basic
+sudo zypper install gstreamer gstreamer-plugins-base gstreamer-plugins-good ffmpeg
 
 sudo zypper ref
 
